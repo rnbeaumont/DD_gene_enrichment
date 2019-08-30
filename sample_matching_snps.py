@@ -54,6 +54,7 @@ if __name__ == "__main__":
                 F=f.readline().rstrip().split()
                 G=F[-1].split(",")
                 for gene in G:
-                    ngene+=1
+                    if gene in ghash:
+                        ngene+=1
         o.write(str(ngene)+"\n")
     o.close()
