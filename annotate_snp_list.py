@@ -36,7 +36,7 @@ def getdist(f,glist,o):
                         if min(up,down)<dist:
                             dist=min(up,down)
                             near=G[0]
-                    elif up<0 and down<0:
+                    elif up<=0 and down<=0:
                         if dist==0:
                             near+=","+G[0]
                         else:
@@ -52,7 +52,7 @@ def getdist(f,glist,o):
                             near=G[0]
                     else:
                         print("ERROR\n")
-        o.write(F[0]+"\t"+F[1]+"\t"+F[2]+"\t"+F[3]+"\t"+F[4]+"\t"+str(dist)+"\t"+near+"\n")
+        o.write(F[0]+"\t"+F[1]+"\t"+F[2]+"\t"+F[3]+"\t"+F[4]+"\t"+F[5]+"\t"+str(dist)+"\t"+near+"\n")
 
 def getnumber(f,glist,wsize,o):
     for line in f:
@@ -82,16 +82,16 @@ def getnumber(f,glist,wsize,o):
                         else:
                             near+=","+G[0]
                         num+=1
-        o.write(F[0]+"\t"+F[1]+"\t"+F[2]+"\t"+F[3]+"\t"+F[4]+"\t"+str(num)+"\t"+near+"\n")
+        o.write(F[0]+"\t"+F[1]+"\t"+F[2]+"\t"+F[3]+"\t"+F[4]+"\t"+F[5]+"\t"+str(num)+"\t"+near+"\n")
 
 if __name__ == "__main__":
     inputfile=''
     outputfile=''
-    glist="gene_list_sex_chr"
+    glist="gene_list"
     wsize=0
     inputfile,outputfile,glist,wsize=readargs(inputfile,outputfile,glist,wsize)
     if inputfile=='' or outputfile=='':
-        print "annotate_snp_list.py -i <inputfile> -o <outputfile> -g <genelsit (optional)> -w <window_size (optional - set to 0 or leave out for nerest gene)> 3"
+        print "annotate_snp_list.py -i <inputfile> -o <outputfile> -g <genelsit (optional)> -w <window_size (optional - set to 0 or leave out for nerest gene)>"
         sys.exit(3)
     o=open(outputfile,"w")
     with open(inputfile,"r") as f:

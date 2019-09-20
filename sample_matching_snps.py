@@ -45,16 +45,26 @@ if __name__ == "__main__":
             F=f.readlines()
             nline.append(len(F))
     o=open(outputfile,"w")
-    for i in range(niter):
+    for k in range(niter):	# number of iterations
         ngene=0
-        for i in range(1,nfiles+1):
+        nsnp=0
+        for i in range(1,nfiles+1):	# loop over the files
+            fhash={}
             with open(snpprefix+str(i),"r") as f:
-                for i in range(random.randint(1,nline[i])):
+                for j in range(random.randint(1,nline[i]-1)):
                     f.readline()
                 F=f.readline().rstrip().split()
-                G=F[-1].split(",")
-                for gene in G:
-                    if gene in ghash:
-                        ngene+=1
-        o.write(str(ngene)+"\n")
+                if len(F)==8:
+                    G=F[-1].split(",")
+                    match=0
+                    for gene in G:
+                        fhash[gene]=1
+                        if gene in ghash:
+                            match=1
+                            if ghash[gene]==1:
+                                ngene+=1
+                            ghash[gene]+=1
+                    if match==1:
+                        nsnp+=1
+        o.write(str(ngene)+"\t"+str(nsnp)+"\n")
     o.close()

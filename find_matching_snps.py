@@ -56,7 +56,9 @@ if __name__ == "__main__":
     s_rsid=F[0]
     s_chr=F[1]
     s_pos=F[2]
-    s_gene=F[6]
+    s_gene=""
+    if len(F)==7:
+        s_gene=F[6]
     found=0
     f.close
     with open(genome,"r") as f:
@@ -68,6 +70,12 @@ if __name__ == "__main__":
             if float(F[5])>0.5:
                 F[5]=1-float(F[5])
             if float(F[5])>s_maf*(1-maf_tol) and float(F[5])<s_maf*(1+maf_tol) and float(F[6])>=s_dist*(1-(dist_tol*(1-dist))) and float(F[6])<=s_dist*(1+(dist_tol*(1-dist))) and float(F[5])>maf_limit:
-                o.write(F[0]+"\t"+F[1]+"\t"+F[2]+"\t"+F[3]+"\t"+F[4]+"\t"+F[5]+"\t"+F[6]+"\t"+F[7]+"\n")
+                if len(F)==8:
+                    o.write(F[0]+"\t"+F[1]+"\t"+F[2]+"\t"+F[3]+"\t"+F[4]+"\t"+F[5]+"\t"+F[6]+"\t"+F[7]+"\n")
+                else:
+                    o.write(F[0]+"\t"+F[1]+"\t"+F[2]+"\t"+F[3]+"\t"+F[4]+"\t"+F[5]+"\t"+F[6]+"\t\n")
     if found==0:
-        o.write(s_rsid+"\t"+s_chr+"\t"+s_pos+"\t1\t2\t"+str(s_maf)+"\t"+str(s_dist)+"\t"+s_gene+"\n")
+        if s_gene!="":
+            o.write(s_rsid+"\t"+s_chr+"\t"+s_pos+"\t1\t2\t"+str(s_maf)+"\t"+str(s_dist)+"\t"+s_gene+"\n")
+        else:
+            o.write(s_rsid+"\t"+s_chr+"\t"+s_pos+"\t1\t2\t"+str(s_maf)+"\t"+str(s_dist)+"\t\n")
